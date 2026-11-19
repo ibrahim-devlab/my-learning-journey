@@ -5,7 +5,6 @@
 from check_the_inputs import check_n
 import accs_manage
 from accs_manage import create_acc
-from password_check import passcheck
 import time
 
 n = ""
@@ -19,14 +18,19 @@ while n != "3":
     
     if n == "2":
         nasb = input(f"Enter your nasb: ")
-        password = input(f"create a new 4 digits password: ")
-            
-        res = passcheck(password)
-        while res == 0:
-            print(f"invalid password: the password should be only 4 digits!")
-            password = input(f"enter a valid password: ")
-            res = passcheck(password)
+        t_nasb = check_n(nasb, "5")
+        while t_nasb == "not_valid":
+            print(f"the nasb shoubd be at least 2 names each at least 2 charecter with space betwein them!")
+            nasb = input(f"enter a valid nasb!: ")
+            t_nasb = check_n(nasb, "5")
 
+        password = input(f"create a new 4 digits password: ")
+        res = check_n(password, "6")
+        while res == "not_valid":
+            print(f"invalid password: the password should be only 4 digits!: ")
+            password = input(f"enter a valid password: ")
+            res = check_n(password, "6")
+    
         info = create_acc(nasb, password)
         print(f"the account has been created!")
         print(f" thank you {info["acc_name"]} for choucing probank!")
@@ -52,7 +56,7 @@ while n != "3":
                 print(f"enter the amount: ")
                 dep_amo = check_n(input(), "3")
 
-                while dep_amo == 1:
+                while dep_amo == "not_valid":
                     print(f"enter a valid value, only digits and dot \".\"")
                     dep_amo = check_n(input(), "3")
 

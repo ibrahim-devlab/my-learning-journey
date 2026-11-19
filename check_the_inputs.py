@@ -1,10 +1,12 @@
 
 
 
+import re
 import accs_manage
 
 def check_n(n, s):
     not_valid = "not_valid"
+    not_enough = "not_enough"
     if s == "1":
         choices = ["1", "2", "3"]
         if n in choices:
@@ -18,36 +20,30 @@ def check_n(n, s):
         else:
             print(f"wrong choice, choice from the list.")
     elif s == "3":
-        if len(n) < 1:
+        match = re.fullmatch(r'(?:[1-9]\d*(?:\.\d+)?|0\.\d+)', n)
+        if match:
+            nf = float(n)
+            return nf
+        else:
             return not_valid
-
-        numbers_and_dot = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
-        dot = ["."]
-        k = 0
-        d = 0
-        for i in n:
-            if i in numbers_and_dot:
-                k += 1
-            if i in dot:
-                d += 1
-        if k != len(n) or d > 1:
-            return not_valid
-
-        nf = float(n)
-        return nf
     elif s == "4":
-        not_enough = "not_enough"
-        numbers_and_dot = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
-        k = 0
-        d = 0
-        for i in n:
-            if i in numbers_and_dot:
-                k += 1
-            if i in dot:
-                d += 1
-        if k != len(n) or d > 1:
+        match = re.fullmatch(r'(?:[1-9]\d*(?:\.\d+)?|0\.\d+)', n)
+        if match:
+            nf = float(n)
+            if nf > accs_manage.account["balance"]:
+                return not_enough
+            return nf
+        else:
             return not_valid
-        nf = float(n)
-        if nf > accs_manage.account["balance"]:
-            return not_enough
-        return nf
+    elif s == "5":
+        match = re.fullmatch(r'(?:[a-z A-Z]{2,}\s[a-z A-Z]{2,})', n)
+        if match:
+            return n
+        else:
+            return not_valid
+    elif s == "6":
+        match = re.fullmatch(r'[\d]{4}', n)
+        if match:
+            return n
+        else:
+            return not_valid

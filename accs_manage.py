@@ -2,10 +2,6 @@
 
 
 from datetime import datetime
-from password_check import passcheck
-
-
-
 
 accs = []
 account = {}
