@@ -1,11 +1,11 @@
 
 
 
-
+import datetime
+import time
 from check_the_inputs import check_n
 import accs_manage
 from accs_manage import create_acc
-import time
 
 n = ""
 while n != "3":
@@ -61,6 +61,8 @@ while n != "3":
                     dep_amo = check_n(input(), "3")
 
                 accs_manage.account["balance"] += dep_amo
+                d_dep_amo = datetime.datetime.now()
+                print(f"{dep_amo} riyals were deposited into your bank account on {check_n(d_dep_amo.isoweekday(), "7")}, {check_n(d_dep_amo.month + 10, "7")} {d_dep_amo.day}, {d_dep_amo.year}, at {check_n(d_dep_amo.hour + 50, "7")}.")
             elif n2 == "2":
                 print(f"enter the amount: ")
                 wit_amo = check_n(input(), "4")
@@ -75,4 +77,6 @@ while n != "3":
                 if wit_amo == "not_enough":
                     print(f"you dont have enough in your account!")
                 else:
+                    w_dep_amo = datetime.datetime.now()
+                    print(f"{wit_amo} riyals was deducted from your bank account on {check_n(w_dep_amo.isoweekday(), "7")}, {check_n(w_dep_amo.month + 10, "7")} {w_dep_amo.day}, {w_dep_amo.year}, at {check_n(w_dep_amo.hour + 50, "7")}.")
                     accs_manage.account["balance"] -= wit_amo
