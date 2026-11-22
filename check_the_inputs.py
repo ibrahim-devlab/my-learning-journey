@@ -3,7 +3,6 @@
 
 import re
 import accs_manage
-
 def check_n(n, s):
     not_valid = "not_valid"
     not_enough = "not_enough"
@@ -44,6 +43,7 @@ def check_n(n, s):
     elif s == "6":
         match = re.fullmatch(r'[\d]{4}', n)
         if match:
+            n = int(n)
             return n
         else:
             return not_valid
@@ -69,3 +69,27 @@ def check_n(n, s):
             , "4": "April", "5": "May", "6": "June", "7": "July", "8": "August"
             , "9": "September", "10": "October", "11": "November", "12": "December"}
             return months[n]
+    elif s == "8":
+        match = re.fullmatch(r'[\d]+', n)
+        
+        if match:
+            n = int(n)
+            if n in accs_manage.count_accs:
+                return n
+            else:
+                return not_enough
+        else:
+            return not_valid
+    elif s == "9":
+        nnn = n.split(">>>")
+        nn = int(nnn[1])
+        nn -= 1
+        match = re.fullmatch(r'[\d]{4}', nnn[0])
+        if match:
+            n = int(nnn[0])
+            if n == accs_manage.accs[nn]["acc_password"]:
+                return n
+            else:
+                return not_enough
+        else:
+            return not_valid
